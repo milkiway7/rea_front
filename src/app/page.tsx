@@ -10,7 +10,7 @@ export default function Home() {
             Cloud<span className="text-blue-600">7</span>
           </h1>
           <p className="mt-4 text-lg max-w-xl text-gray-300">
-            Twój inteligentny partner w świecie nieruchomości – od analizy rynku po wyszukiwanie idealnych ofert. AI zmienia sposób, w jaki agencje pracują z klientami.
+            Twój inteligentny partner w świecie nieruchomości - od analizy rynku po wyszukiwanie idealnych ofert. AI zmienia sposób, w jaki agencje pracują z klientami.
           </p>
         </div>
 

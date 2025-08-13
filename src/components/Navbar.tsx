@@ -25,7 +25,7 @@ export default function Navbar() {
             <a href="/ai_search" className="hover:text-blue-500 transition">Wyszukiwarka</a>
           </li>
           <li>
-            <a href="/about" className="hover:text-blue-500 transition">O nas</a>
+            <a href="/dashboard" className="hover:text-blue-500 transition">Dashboard</a>
           </li>
         </ul>
 
@@ -48,7 +48,7 @@ export default function Navbar() {
               <a href="/ai_search" className="hover:text-blue-500 transition">Wyszukiwarka</a>
             </li>
             <li>
-              <a href="/about" className="hover:text-blue-500 transition">O nas</a>
+              <a href="/dashboard" className="hover:text-blue-500 transition">Dashboard</a>
             </li>
           </ul>
         </div>
