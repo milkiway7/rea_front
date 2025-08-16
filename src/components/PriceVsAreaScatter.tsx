@@ -1,4 +1,3 @@
-// src/components/charts/PriceVsAreaScatter.tsx
 'use client';
 
 import {
@@ -22,24 +21,51 @@ export default function PriceVsAreaScatter({ data }: { data: ScatterPoint[] }) {
         price: Number(p.price),
         area: Number(p.area),
         rooms: typeof p.rooms === 'string' && /^\d+$/.test(p.rooms) ? Number(p.rooms) : p.rooms,
-        pricePerM2: p.pricePerM2 !== undefined ? Number(p.pricePerM2) : (Number(p.price) / Number(p.area)),
-        createdAt: p.createdAt ? new Date(p.createdAt as any).toISOString() : undefined,
+        pricePerM2: p.pricePerM2 !== undefined
+          ? Number(p.pricePerM2)
+          : (Number(p.price) / Number(p.area)),
+        createdAt: p.createdAt
+          ? new Date(p.createdAt as any).toISOString()
+          : undefined,
       }))
   ), [data]);
 
-  const fmtInt = (n?: number) => typeof n === 'number' ? new Intl.NumberFormat('pl-PL').format(n) : '—';
-  const fmtMoney = (n?: number) => typeof n === 'number' ? `${fmtInt(Math.round(n))} zł` : '—';
-  const fmtPpm2 = (n?: number) => typeof n === 'number' ? `${fmtInt(Math.round(n))} zł/m²` : '—';
+  const fmtInt = (n?: number) =>
+    typeof n === 'number' ? new Intl.NumberFormat('pl-PL').format(n) : '—';
+  const fmtMoney = (n?: number) =>
+    typeof n === 'number' ? `${fmtInt(Math.round(n))} zł` : '—';
+  const fmtPpm2 = (n?: number) =>
+    typeof n === 'number' ? `${fmtInt(Math.round(n))} zł/m²` : '—';
 
   return (
-    <div className="w-full h-80 bg-[#1e1e1e] rounded-xl p-4 border border-[#333]">
+    <div className="w-full h-80 rounded-xl p-4 border border-[#222]">
       <h3 className="text-sm text-white font-semibold mb-2">Zależność ceny od metrażu</h3>
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart margin={{ top: 8, right: 16, bottom: 8, left: 0 }}>
-          <CartesianGrid />
-          <XAxis type="number" dataKey="area" name="Powierzchnia" unit=" m²" tick={{ fontSize: 12 }} />
-          <YAxis type="number" dataKey="price" name="Cena" unit=" zł" tick={{ fontSize: 12 }} />
+          <CartesianGrid stroke="#222" strokeDasharray="3 3" />
+          <XAxis
+            type="number"
+            dataKey="area"
+            name="Powierzchnia"
+            unit=" m²"
+            tick={{ fontSize: 12, fill: '#ccc' }}
+          />
+          <YAxis
+            type="number"
+            dataKey="price"
+            name="Cena"
+            unit=" zł"
+            tick={{ fontSize: 12, fill: '#ccc' }}
+          />
           <Tooltip
+            contentStyle={{
+              backgroundColor: '#1e1e2f',
+              border: '1px solid #444',
+              color: '#fff'
+            }}
+              itemStyle={{
+            color: '#fff', // biały tekst w wierszach
+            }}
             formatter={(value: any, name: string) => {
               if (name === 'price') return [fmtMoney(Number(value)), 'Cena'];
               if (name === 'area') return [`${value} m²`, 'Powierzchnia'];
@@ -49,15 +75,25 @@ export default function PriceVsAreaScatter({ data }: { data: ScatterPoint[] }) {
             }}
             labelFormatter={(_v, payload: any) => {
               const pt = (payload && payload[0] && payload[0].payload) || {};
-              const d = pt.createdAt ? new Date(pt.createdAt).toLocaleString('pl-PL') : '—';
+              const d = pt.createdAt
+                ? new Date(pt.createdAt).toLocaleString('pl-PL')
+                : '—';
               return `Data: ${d}`;
             }}
           />
-          <Legend />
-          <Scatter data={normalized} name="Oferty" />
+          <Legend wrapperStyle={{ color: '#fff' }} />
+          <Scatter
+            data={normalized}
+            name="Oferty"
+            fill="#ff00ff"
+            stroke="#00ffff"
+            strokeWidth={1.2}
+          />
         </ScatterChart>
       </ResponsiveContainer>
-      <p className="text-[11px] text-gray-400 mt-2">Każdy punkt = oferta. Tooltip: pokoje, zł/m², data.</p>
+      <p className="text-[11px] text-gray-400 mt-2">
+        Każdy punkt = oferta. Tooltip: pokoje, zł/m², data.
+      </p>
     </div>
   );
 }
